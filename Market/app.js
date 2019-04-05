@@ -15,14 +15,19 @@ $(document).ready(function() {
   var img = __dirname + "/ic.png";
   var key = obj.key;
   var name = obj.name;
+  var adat = obj.dat;
   if (fs.existsSync(wd_imgs + obj.key + ".png")) {
     img = wd_imgs + obj.key + ".png";
   }
   $("#bcat").text(wd_cat + ": " + obj.name);
   $("#con").html('<img src="' + img + '" alt="logo image" style="width: 33%;"><h1>' + obj.name + ': <button class="btn btn-success" id="install"><i class="fas fa-cloud-download-alt"></i> Install</button></h1><p>' + obj.des + '</p>');
   $("#install").click(function(){
+    if (!fs.existsSync(wd_dir + name)) {
+      fs.mkdirSync(wd_dir + name);
+    }
+    console.log(wd_dir + name);
     Dat(wd_dir + name, {
-      key: mykey
+      key: adat
     }, function (err, dat) {
       if (err) throw err
       dat.joinNetwork();
