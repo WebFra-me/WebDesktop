@@ -1,0 +1,25 @@
+{
+  "name": "webdesktop",
+  "version": "1.0.0",
+  "description": "WebFrame for your desktop!",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [
+    "webdesktop",
+    "webframe",
+    "webfra_me"
+  ],
+  "author": "WebFrame",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "electron": "^4.1.2",
+    "electron-packager": "^13.1.1"
+  },
+  "dependencies": {
+    "adm-zip": "^0.4.13",
+    "dat": "^13.11.5",
+    "fs-extra": "^7.0.1"
+  }
+}

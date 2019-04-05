@@ -1,0 +1,38 @@
+html, body{
+  font-family: "Courier New", Courier, Monospace;
+}
+h1,h2,h3{
+  font-family: "Arial Rounded MT", Arial, Helvetica, sans-serif;
+}
+.jumbotron{
+  color: #ffffff;
+  background-color: #1161D9;
+}
+.card{
+  //color: #ffffff;
+  color: #000000;
+  //background-color: #D98911;
+  background-color: #ffffff;
+}
+a{
+  color: #000000;
+}
+.CodeMirror {
+    border: 1px solid #eee;
+    height: 100%;
+    width: 100%;
+  }
+  .directory-listing .options-link{
+
+    visibility: hidden;
+
+  }
+  .directory-listing tr:hover .options-link button::after{
+    border: none;
+    margin-left: 0;
+  }
+  .directory-listing tr:hover .options-link{
+
+    visibility: visible;
+
+  }

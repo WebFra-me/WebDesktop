@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebDesktop</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="Plugins/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="Plugins/fontawesome/css/all.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+ <a class="navbar-brand" href="#" id="wdoc"><img src="WebDesk.png" alt="WebFrame" style="width:150px;">top</a>
+ <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+   <span class="navbar-toggler-icon"></span>
+ </button>
+ <div class="collapse navbar-collapse" id="collapsibleNavbar">
+   <ul class="navbar-nav mr-auto">
+     <li class="nav-item">
+       <a class="nav-link" href="Market/index.html" target="_blank">The_Bazaar</a>
+     </li>
+     <li class="nav-item">
+       <a class="nav-link" href="Dev/index.html" target="_blank">Develop</a>
+     </li>
+     <li class="nav-item">
+       <a class="nav-link" href="#" data-toggle="modal" data-target="#help"><i class="fas fa-question-circle" title="Help"></i></a>
+     </li>
+   </ul>
+ </div>
+</nav>
+<div class="modal fade" id="help">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Need Help</h4>
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <h1>Welcome to CastFrame!</h1>
+      <h3>Uses:</h3>
+      <p>CastFrame can be used as a way to share a website or files over a local network.</p>
+      <h3>Known Issues:</h3>
+      <p>CastFrame currently does not support folders in the CastFrame folder.</p>
+      <h3>Basic Instructions:</h3>
+      <p>Add what you would like to brodcast to the CastFrame folder. If it has a .html extention it will display as a website. If an index.html file is included, that will display first when someone visits you address; otherwise a map of the CastFrame folder will apear.</p>
+      <p>Click "Start Server" to turn your server on and click "Stop Server" to shut the server off.</p>
+      <p>Give people your IP address and port number displayd on your screen when the server is turned on, if you wish them to find your server more easily.</p>
+      <h3>Dat Folder:</h3>
+      <p>Add Items to the Dat folder that you want to run to brodcast to people with the link through aplications like CastFrame reciever that handle the dat protcol (a P2P protocol).</p>
+      <h3>Warning:</h3>
+      <p>Anything in the CastFrame folder when your server is on can be seen by anyone on the same network. Turning on your server could present you with onforseen security risks. </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+
+  </div>
+</div>
+</div>
+  <div class="container">
+    <br><br><br>
+    <div><p><b>Broadcasting <a href="#" id="bwww"><u>www</u></a> on: <span id="myip"><span/></b></p></div>
+    <button id="adir" class="btn btn-link"><h3>Apps:</h3></button>
+    <div id="apps" class="row"></div>
+    <br><hr><br>
+    <button id="mdir" class="btn btn-link"><h3>My Apps:</h3></button>
+    <div id="myapps" class="row"></div>
+    <br><br><br>
+    <nav class="navbar navbar-expand-sm bg-dark fixed-bottom">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link text-light" href="https://www.webfra.me/" target="_blank">[WebFrame]</a>
+    </li>
+  </ul>
+  <span class="navbar-text text-light">
+    <a href="title17.pdf" target="_blank" class="text-light">&copy;<span id="year">2019</span></a>  <span>License: <a class="text-light" href="GPL-3_0.html" target="_blank">GPL-3.0</a></span>
+  </span>
+</nav>
+  </div>
+  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+  <script src="Plugins/jquery.min.js"></script>
+  <script src="Plugins/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="Plugins/fontawesome/js/all.js"></script>
+  <script src="index.js"></script>
+  <script>if (window.module) module = window.module;</script>
+</body>
+</html>
