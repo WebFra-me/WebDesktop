@@ -158,6 +158,12 @@ document.getElementById("myip").innerHTML = myIP;
 });
 //document.getElementById("myip").innerHTML = myIP;
 });
+$("#wwwe").click(function(){
+  location.reload();
+});
+$("#wwws").click(function(){
+  $("#wwwe").show();
+  $("#wwws").hide();
 //Server
 if(fs.existsSync(wd_www + 'favicon.ico')){
   var FAVICON = wd_www + 'favicon.ico';
@@ -240,5 +246,6 @@ var server = http.createServer(function (req, res) {
 }).listen(8080);
 //$('[data-toggle="tooltip"]').tooltip();
 console.log("WebServer trafic will show up here.");
+});
 });
 console.log("WebServer trafic will show up here.");
