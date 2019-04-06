@@ -32,20 +32,36 @@ $(document).ready(function() {
   var wd_repos = wd_core + 'WebDesktop_repo/';
   if (!fs.existsSync(wd_repos)) {
     fs.mkdirSync(wd_repos);
-    repo_key = fs.readFileSync(__dirname + "/repo_key.txt");
+    var repo_key = fs.readFileSync(__dirname + "/repo_key.txt");
+    console.log("repo_key: " + repo_key);
     if (fs.existsSync(wd_core + '/settings.json')) {
-      read_repo = fs.readFileSync(wd_core + '/settings.json');
+      var read_repo = fs.readFileSync(wd_core + '/settings.json');
       var obj = JSON.parse(read_repo);
       obj.rkey = repo_key;
+      var rJSON = JSON.stringify(obj);
     }
     else{
-      var obj = { "rkey":repo_key};
+      var rJSON = '{"rkey": "' + repo_key + '"}';
+      //var obj = {rkey:repo_key};
+      //console.log("obj: " + obj);
     }
-    var rJSON = JSON.stringify(obj)
+    //var rJSON = JSON.stringify(obj);
+    console.log("rJSON: " + rJSON);
     fs.writeFile(wd_core + '/settings.json', rJSON, function (err) {
       if (err) throw err;
       console.log('Saved!');
     });
+    Dat(wd_repos, {
+      key: repo_key
+    }, function (err, dat) {
+      if (err) throw err
+      dat.joinNetwork();
+    });
+  }
+  else{
+    var read_repo = fs.readFileSync(wd_core + '/settings.json');
+    var obj = JSON.parse(read_repo);
+    var repo_key = obj.rkey;
     Dat(wd_repos, {
       key: repo_key
     }, function (err, dat) {
@@ -60,7 +76,7 @@ for (i = 0; i < files.length; i++) {
       var file = fs.readFileSync(wd_dir + files[i] + '/wd.json');
       var obj = JSON.parse(file);
       var mykey = obj.dat;
-      document.getElementById("apps").innerHTML += '<div class="card col-sm-2" data-toggle="tooltip" title="' + obj.des + '"><a href="' + wd_dir + files[i] + '/index.html" target="_blank"><img class="card-img-bottom" src="' + obj.icon + '" alt="' + obj.name + '" style="width:100%"></a><figcaption><a href="' + wd_dir + files[i] + '/index.html" target="_blank">' + obj.name + '</a></figcaption></div>';
+      document.getElementById("apps").innerHTML += '<div class="card col-sm-2" data-toggle="tooltip" title="' + obj.des + '"><a href="' + wd_dir + files[i] + '/index.html" target="_blank"><img class="card-img-bottom" src="ic.png" alt="' + obj.name + '" style="width:100%"></a><figcaption><a href="' + wd_dir + files[i] + '/index.html" target="_blank">' + obj.name + '</a></figcaption></div>';
 Dat(wd_dir + files[i], {
   key: mykey
 }, function (err, dat) {
@@ -75,7 +91,7 @@ for (i = 0; i < files.length; i++) {
    if (fs.existsSync(wd_mdir + files[i] + '/index.html')) {
      var file = fs.readFileSync(wd_mdir + files[i] + '/wd.json');
      var obj = JSON.parse(file);
-     document.getElementById("myapps").innerHTML += '<div class="card col-sm-2" data-toggle="tooltip" title="' + obj.des + '"><a href="' + wd_mdir + files[i] + '/index.html" target="_blank"><img class="card-img-bottom" src="' + obj.icon + '" alt="' + obj.name + '" style="width:100%"></a><figcaption><a href="' + wd_dir + files[i] + '/index.html" target="_blank">' + obj.name + '</a></figcaption></div>';
+     document.getElementById("myapps").innerHTML += '<div class="card col-sm-2" data-toggle="tooltip" title="' + obj.des + '"><a href="' + wd_mdir + files[i] + '/index.html" target="_blank"><img class="card-img-bottom" src="ic.png" alt="' + obj.name + '" style="width:100%"></a><figcaption><a href="' + wd_dir + files[i] + '/index.html" target="_blank">' + obj.name + '</a></figcaption></div>';
 var myfile = files[i];
 var mydat = "";
 Dat(wd_mdir + files[i], function (err, dat) {
@@ -104,7 +120,7 @@ $("#wdoc").click(function(){
 $("#bwww").click(function(){
   shell.openItem(wd_www);
 });
-var con = '<!DOCTYPE html><html><title>Site Map</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><body><h3>Site Map:</h3><ul>';
+var con = '<!DOCTYPE html><html><title>Site Map</title><meta charset="utf-8"><link href="favicon.ico" rel="icon" type="image/x-icon" /><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><body><h3>Site Map:</h3><ul>';
 files = fs.readdirSync(wd_www);
 for (i = 0; i < files.length; i++) {
     if (fs.existsSync(wd_www + files[i])) {
@@ -143,10 +159,18 @@ document.getElementById("myip").innerHTML = myIP;
 //document.getElementById("myip").innerHTML = myIP;
 });
 //Server
+if(fs.existsSync(wd_www + 'favicon.ico')){
+  var FAVICON = wd_www + 'favicon.ico';
+}
+else{
+  var FAVICON = __dirname + '/favicon.ico';
+}
+var d = new Date();
 var server = http.createServer(function (req, res) {
   var pathname = decodeURIComponent(url.parse(req.url).pathname);
   var ext = pathname.split(".");
   var ftype = "html";
+  var getClientAddress = req.connection.remoteAddress;
   if(typeof ext[1] !== 'undefined' && ext[1] != 'html'){
     if(ext[1] == 'css'){
       var ftype = "css";
@@ -164,19 +188,27 @@ var server = http.createServer(function (req, res) {
         res.writeHead(200, {'Content-Type': 'text/html'});
         var myReadStream = fs.createReadStream(wd_www + 'index.html', 'utf8');
         myReadStream.pipe(res);
+        console.log(getClientAddress + " - index.html" + ":" + d);
       }
       else{
         res.writeHead(200, {'Content-Type': 'text/html'});
         var myReadStream = fs.createReadStream(wd_www + 'map.html', 'utf8');
         myReadStream.pipe(res);
+        console.log(getClientAddress + " - map.html" + ":" + d);
       }
         break;
       default:
-      if(fs.existsSync(wd_www + pathname)){
+      if (pathname === '/favicon.ico') {
+        res.setHeader('Content-Type', 'image/x-icon');
+        fs.createReadStream(FAVICON).pipe(res);
+        return;
+      }
+      else if(fs.existsSync(wd_www + pathname)){
         if(ftype == "html"){
           res.writeHead(200, {'Content-Type': 'text/html'});
           var myReadStream = fs.createReadStream(wd_www + pathname, 'utf8');
           myReadStream.pipe(res);
+          console.log(getClientAddress + " - " + pathname + ":" + d);
         }
         else if (ftype == "css") {
           res.writeHead(200, {'Content-Type': 'text/css'});
@@ -207,4 +239,6 @@ var server = http.createServer(function (req, res) {
     //myReadStream.pipe(res);
 }).listen(8080);
 //$('[data-toggle="tooltip"]').tooltip();
+console.log("WebServer trafic will show up here.");
 });
+console.log("WebServer trafic will show up here.");

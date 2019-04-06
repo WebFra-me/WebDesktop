@@ -29,26 +29,34 @@
  </div>
 </nav>
 <div class="modal fade" id="help">
-<div class="modal-dialog">
+<div class="modal-dialog modal-lg">
   <div class="modal-content">
     <div class="modal-header">
       <h4 class="modal-title">Need Help</h4>
       <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
     <div class="modal-body">
-      <h1>Welcome to CastFrame!</h1>
+      <h1>Welcome to WebDesktop!</h1>
       <h3>Uses:</h3>
-      <p>CastFrame can be used as a way to share a website or files over a local network.</p>
+      <p>WebDesktop: find, build, and use great desktop applications easily.</p>
+      <h3>Home Screen: </h3>
+      <p>The home screen is seprated into two areas. The Apps area is ware applications you have installed will show up. The MyApps area is ware applications you make live.</p>
+      <h3>The Bazaar: </h3>
+      <p>The Bazaar is the marketplace ware you can install all sorts of goodies from the repo of your choise.</p>
+      <p><b>Warning: </b> WebDesktop does not garentee the quality of the apps in the repository you have chosen and is not liable for anything in regards to them.</p>
+      <h3>Develop: </h3>
+      <p>This is ware you go to start writing your own apps.</p>
+      <h3>Logo: </h3>
+      <p>Opens up the folder that contains all Webdesktops user files.</p>
+      <h2>Local Broadcasting webserver:</h2>
       <h3>Known Issues:</h3>
-      <p>CastFrame currently does not support folders in the CastFrame folder.</p>
+      <p>WebDesktop's www folder currently does not support folders for use in the local webserver.</p>
       <h3>Basic Instructions:</h3>
-      <p>Add what you would like to brodcast to the CastFrame folder. If it has a .html extention it will display as a website. If an index.html file is included, that will display first when someone visits you address; otherwise a map of the CastFrame folder will apear.</p>
-      <p>Click "Start Server" to turn your server on and click "Stop Server" to shut the server off.</p>
+      <p>Add what you would like to brodcast to the "www" folder. If it has a .html extention it will display as a website. If an index.html file is included, that will display first when someone visits you address; otherwise a map of the "www" folder will apear.</p>
       <p>Give people your IP address and port number displayd on your screen when the server is turned on, if you wish them to find your server more easily.</p>
-      <h3>Dat Folder:</h3>
-      <p>Add Items to the Dat folder that you want to run to brodcast to people with the link through aplications like CastFrame reciever that handle the dat protcol (a P2P protocol).</p>
-      <h3>Warning:</h3>
-      <p>Anything in the CastFrame folder when your server is on can be seen by anyone on the same network. Turning on your server could present you with onforseen security risks. </p>
+      <p><b>Logging: </b>WebServer traffic can be found by going to view in the top menue and going to developer tools.</p>
+      <p><b>Warning: </b>Anything in the "www" folder when WebDesktop is open can be seen by anyone on the same network. This could present you with a security risks depending on what you have in your "www" folder. </p>
+      <p><b>Note: </b>For more information please visit: <i><a href="https://github.com/WebFra-me/WebDesktop/wiki" target="_blank">https://github.com/WebFra-me/WebDesktop/wiki</a></i></p>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -61,10 +69,10 @@
     <br><br><br>
     <div><p><b>Broadcasting <a href="#" id="bwww"><u>www</u></a> on: <span id="myip"><span/></b></p></div>
     <button id="adir" class="btn btn-link"><h3>Apps:</h3></button>
-    <div id="apps" class="row"></div>
+    <div id="apps" class="row"><i class="fas fa-cog  fa-spin"></i><b style="font-size: 2em;">Loading...</b></div>
     <br><hr><br>
     <button id="mdir" class="btn btn-link"><h3>My Apps:</h3></button>
-    <div id="myapps" class="row"></div>
+    <div id="myapps" class="row"><i class="fas fa-cog  fa-spin"></i><b style="font-size: 2em;">Loading...</b></div>
     <br><br><br>
     <nav class="navbar navbar-expand-sm bg-dark fixed-bottom">
   <ul class="navbar-nav">

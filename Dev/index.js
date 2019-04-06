@@ -32,7 +32,7 @@ $(document).ready(function() {
      wd["cat"] = document.getElementById("cat").value;
      wd["age"] = document.getElementById("age").value;
      wd["license"] = "GPL-3.0";
-    wd["icon"] = "ic.png";
+    //wd["icon"] = "ic.png";
     var wd_new = wd_mdir + wd["name"] + '/';
     var mydat = "";
     Dat(wd_new, function (err, dat) {
@@ -70,6 +70,7 @@ $(document).ready(function() {
      }
      var inStr = fs.createReadStream(__dirname + '/includes/ic.png');
      var outStr = fs.createWriteStream(wd_plugins + 'ic.png');
+     var outStr = fs.createWriteStream(wd_new + 'ic.png');
      inStr.pipe(outStr);
      inStr = fs.createReadStream(__dirname + '/includes/jquery.js');
      outStr = fs.createWriteStream(wd_plugins + 'jquery.js');
