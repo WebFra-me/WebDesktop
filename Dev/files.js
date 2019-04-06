@@ -77,10 +77,10 @@ $(document).ready(function() {
      if (!fs.existsSync(wd_alone)) {
        fs.mkdirSync(wd_alone);
      }
-     var wd_mac = wd_home + 'WebDesktop_alone/mac/';
+     /*var wd_mac = wd_home + 'WebDesktop_alone/mac/';
      if (!fs.existsSync(wd_mac)) {
        fs.mkdirSync(wd_mac);
-     }
+     }*/
      /*try {
        var zip = new admzip(__dirname + '/publish/starter.zip');
        zip.extractAllTo(wd_mac);
@@ -94,13 +94,17 @@ $(document).ready(function() {
   console.log('source.txt was copied to destination.txt');
 });*/
 if(zip == 1){
-     fse.copy(__dirname + '/publish/starter.zip', wd_mac + 'starter.zip');
+     fse.copy(__dirname + '/publish/mac.zip', wd_alone + 'mac.zip');
+     fse.copy(__dirname + '/publish/linux.zip', wd_alone + 'linux.zip');
+     fse.copy(__dirname + '/publish/windows.zip', wd_alone + 'windows.zip');
      zip += 1;
-     alert('Unzip starter.zip and press "Create stand alone app" button again to finish your app.');
+     alert('Unzip mac.zip, linux.zip, and windows.zip; then press "Create stand alone app" button again to finish your app.');
    }
    else{
      //shell.openItem(wd_mac + 'starter.zip');
-     fse.copySync(wd_mdir + wd_dir, wd_mac + 'starter/Electron.app/Contents/Resources/app');
+     fse.copySync(wd_mdir + wd_dir, wd_alone + 'mac/Electron.app/Contents/Resources/app');
+     fse.copySync(wd_mdir + wd_dir, wd_alone + 'linux/resources/app');
+     fse.copySync(wd_mdir + wd_dir, wd_alone + 'windows/resources/app');
      /*fse.copy(wd_mdir + wd_dir + "/", wd_mac + 'starter/Electron.app/Contents/Resources/app/', err => {
        if (err) return console.error(err)
        console.log('success!')
@@ -109,26 +113,55 @@ if(zip == 1){
        if (err) return console.error(err)
        console.log('success!')
      });*/
-     fse.copy(__dirname + '/alone/GPL-3_0.html', wd_mac + 'starter/Electron.app/Contents/Resources/app/GPL-3_0.html', err => {
+     fse.copy(__dirname + '/alone/GPL-3_0.html', wd_alone + 'mac/Electron.app/Contents/Resources/app/GPL-3_0.html', err => {
        if (err) return console.error(err)
        console.log('success!')
      });
-     fse.copy(__dirname + '/alone/main.js', wd_mac + 'starter/Electron.app/Contents/Resources/app/main.js', err => {
+     fse.copy(__dirname + '/alone/main.js', wd_alone + 'mac/Electron.app/Contents/Resources/app/main.js', err => {
        if (err) return console.error(err)
        console.log('success!')
      });
-     fse.copy(__dirname + '/alone/mainmenu.js', wd_mac + 'starter/Electron.app/Contents/Resources/app/mainmenu.js', err => {
+     fse.copy(__dirname + '/alone/mainmenu.js', wd_alone + 'mac/Electron.app/Contents/Resources/app/mainmenu.js', err => {
        if (err) return console.error(err)
        console.log('success!')
      });
-     /*fse.copy(__dirname + '/alone/package-lock.json', wd_mac + 'starter/Electron.app/Contents/Resources/app/package-lock.json', err => {
-       if (err) return console.error(err)
-       console.log('success!')
-     });*/
-     fse.copy(__dirname + '/alone/package.json', wd_mac + 'starter/Electron.app/Contents/Resources/app/package.json', err => {
+     fse.copy(__dirname + '/alone/package.json', wd_alone + 'mac/Electron.app/Contents/Resources/app/package.json', err => {
        if (err) return console.error(err)
        console.log('success!')
      });
+     fse.copy(__dirname + '/alone/GPL-3_0.html', wd_alone + 'linux/resources/app/GPL-3_0.html', err => {
+       if (err) return console.error(err)
+       console.log('success!')
+     });
+     fse.copy(__dirname + '/alone/main.js', wd_alone + 'linux/resources/app/main.js', err => {
+       if (err) return console.error(err)
+       console.log('success!')
+     });
+     fse.copy(__dirname + '/alone/mainmenu.js', wd_alone + 'linux/resources/app/mainmenu.js', err => {
+       if (err) return console.error(err)
+       console.log('success!')
+     });
+     fse.copy(__dirname + '/alone/package.json', wd_alone + 'linux/resources/app/package.json', err => {
+       if (err) return console.error(err)
+       console.log('success!')
+     });
+     fse.copy(__dirname + '/alone/GPL-3_0.html', wd_alone + 'windows/resources/app/GPL-3_0.html', err => {
+       if (err) return console.error(err)
+       console.log('success!')
+     });
+     fse.copy(__dirname + '/alone/main.js', wd_alone + 'windows/resources/app/main.js', err => {
+       if (err) return console.error(err)
+       console.log('success!')
+     });
+     fse.copy(__dirname + '/alone/mainmenu.js', wd_alone + 'windows/resources/app/mainmenu.js', err => {
+       if (err) return console.error(err)
+       console.log('success!')
+     });
+     fse.copy(__dirname + '/alone/package.json', wd_alone + 'windows/resources/app/package.json', err => {
+       if (err) return console.error(err)
+       console.log('success!')
+     });
+     alert('Your applications have been created at: /Documents/Webdesktop/WebDesktop_alone/');
    }
      shell.openItem(wd_alone);
    });
