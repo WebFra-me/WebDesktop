@@ -247,5 +247,19 @@ var server = http.createServer(function (req, res) {
 //$('[data-toggle="tooltip"]').tooltip();
 console.log("WebServer trafic will show up here.");
 });
+var wd_v = fs.readFileSync(__dirname + '/version.txt', 'utf8');
+//var mrobj = JSON.parse(fs.readFileSync(wd_repos + '/repo.json', 'utf8'));
+var mrobj = require(wd_repos + '/repo.json');
+console.log("New WebDesktop: " + mrobj.wd_ver);
+console.log("Current WebDesktop: " + wd_v);
+var wd_nv = mrobj.wd_ver;
+var wd_nl = mrobj.wd_link;
+if(wd_v != wd_nv){
+  $("#wd_update").show();
+    //document.getElementById("#wd_update_link").href=mrobj.wd_link;
+}
+$("#wd_update_link").click(function(){
+  window.open(wd_nl, '_blank');
+});
 });
 console.log("WebServer trafic will show up here.");
