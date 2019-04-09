@@ -126,8 +126,8 @@ $(document).ready(function() {
     alert("Installed: Please restart WebDesktop to view.");
     $('#napp').modal('toggle');
   });
-  if (fs.existsSync(wd_core + '/settings.json')) {
-    read_repo = fs.readdirSync(wd_core + '/settings.json');
+  if (fs.existsSync(wd_core + 'settings.json')) {
+    read_repo = fs.readFileSync(wd_core + 'settings.json');
     var obj = JSON.parse(read_repo);
     var repo_key = obj.key;
   }

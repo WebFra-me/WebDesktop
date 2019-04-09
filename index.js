@@ -34,8 +34,8 @@ $(document).ready(function() {
     fs.mkdirSync(wd_repos);
     var repo_key = fs.readFileSync(__dirname + "/repo_key.txt");
     console.log("repo_key: " + repo_key);
-    if (fs.existsSync(wd_core + '/settings.json')) {
-      var read_repo = fs.readFileSync(wd_core + '/settings.json');
+    if (fs.existsSync(wd_core + 'settings.json')) {
+      var read_repo = fs.readFileSync(wd_core + 'settings.json');
       var obj = JSON.parse(read_repo);
       obj.rkey = repo_key;
       var rJSON = JSON.stringify(obj);
@@ -47,7 +47,7 @@ $(document).ready(function() {
     }
     //var rJSON = JSON.stringify(obj);
     console.log("rJSON: " + rJSON);
-    fs.writeFile(wd_core + '/settings.json', rJSON, function (err) {
+    fs.writeFile(wd_core + 'settings.json', rJSON, function (err) {
       if (err) throw err;
       console.log('Saved!');
     });
@@ -55,19 +55,22 @@ $(document).ready(function() {
       key: repo_key
     }, function (err, dat) {
       if (err) throw err
+      console.log('My Dat repo: dat://', dat.key.toString('hex'));
       dat.joinNetwork();
     });
   }
   else{
-    var read_repo = fs.readFileSync(wd_core + '/settings.json');
+    var read_repo = fs.readFileSync(wd_core + 'settings.json');
     var obj = JSON.parse(read_repo);
     var repo_key = obj.rkey;
     Dat(wd_repos, {
       key: repo_key
     }, function (err, dat) {
       if (err) throw err
+      console.log('My Dat repo: dat://', dat.key.toString('hex'));
       dat.joinNetwork();
     });
+    console.log("Repo Dat: " + repo_key);
   }
 document.getElementById("apps").innerHTML = '';
  files = fs.readdirSync(wd_dir);
@@ -97,7 +100,7 @@ var mydat = "";
 Dat(wd_mdir + files[i], function (err, dat) {
   if (err) throw err
   dat.importFiles();
-  dat.joinNetwork();
+  //dat.joinNetwork();
   console.log('My Dat link is: dat://', dat.key.toString('hex'));
   obj.dat = dat.key.toString('hex');
   var jsonContent = JSON.stringify(obj);
@@ -105,6 +108,8 @@ Dat(wd_mdir + files[i], function (err, dat) {
     if (err) throw err;
     console.log('Saved!');
   });
+  dat.importFiles();
+  dat.joinNetwork();
 });
    }
 }
@@ -249,7 +254,8 @@ console.log("WebServer trafic will show up here.");
 });
 var wd_v = fs.readFileSync(__dirname + '/version.txt', 'utf8');
 //var mrobj = JSON.parse(fs.readFileSync(wd_repos + '/repo.json', 'utf8'));
-var mrobj = require(wd_repos + '/repo.json');
+if(fs.existsSync(wd_repos + 'repo.json')){
+var mrobj = require(wd_repos + 'repo.json');
 console.log("New WebDesktop: " + mrobj.wd_ver);
 console.log("Current WebDesktop: " + wd_v);
 var wd_nv = mrobj.wd_ver;
@@ -261,5 +267,6 @@ if(wd_v != wd_nv){
 $("#wd_update_link").click(function(){
   window.open(wd_nl, '_blank');
 });
+};
 });
 console.log("WebServer trafic will show up here.");
