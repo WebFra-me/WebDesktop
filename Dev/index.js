@@ -50,12 +50,12 @@ $(document).ready(function() {
         console.log('Saved wd.json!');
       });
     });
-     var vhtml = '<!DOCTYPE html>\n<html>\n\t<head>\n\t\t<title>' + wd["name"] + '</title>\n\t\t<meta charset="utf-8">\n\t\t<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">\n\t\t<link rel="stylesheet" href="Plugins/bootstrap.css">\n\t\t<link rel="stylesheet" href="Plugins/fontawesome.css">\n\t\t<link rel="stylesheet" href="style.css">\n\t</head>\n\t<body>\n\t\t<div class="container">\n\t\t\t<h1>' + wd["name"] + '</h1>\n\t\t</div>\n\t\t<script>if (typeof module === "object") {window.module = module; module = undefined;}</script>\n\t\t<script src="Plugins/jquery.js"></script>\n\t\t<script src="Plugins/bootstrap.js"></script>\n\t\t<script src="Plugins/vue.js"></script>\n\t\t<script src="Plugins/fontawesome.js"></script>\n\t\t<!--<script src="Plugins/phaser.js"></script>-->\n\t\t<script src="index.js"></script>\n\t\t<script>if (window.module) module = window.module;</script>\n\t</body>\n</html>';
+     var vhtml = '<!DOCTYPE html>\n<html>\n\t<head>\n\t\t<he></he>\n\t</head>\n\t<body>\n\t\t<header></header>\n\t\t<nav></nav>\n\t\t<div class="container">\n\t\t\t\n\t\t</div>\n\t\t<foot></foot>\n\t\t<script>if (typeof module === "object") {window.module = module; module = undefined;}</script>\n\t\t<script src="Plugins/jquery.js"></script>\n\t\t<script src="Plugins/bootstrap.js"></script>\n\t\t<script src="Plugins/vue.js"></script>\n\t\t<script src="Plugins/fontawesome.js"></script>\n\t\t<!--<script src="Plugins/phaser.js"></script>-->\n\t\t<script src="func.js"></script>\n\t\t<script src="index.js"></script>\n\t\t<script>if (window.module) module = window.module;</script>\n\t</body>\n</html>';
      fs.writeFile(wd_new + 'index.html', vhtml, function (err) {
        if (err) throw err;
        console.log('Saved index.html!');
      });
-     vjs = '$(document).ready(function() {\n\t\n});';
+     var vjs = '$(document).ready(function() {\n\t$("#n-home").addClass("active");\n});';
      fs.writeFile(wd_new + 'index.js', vjs, function (err) {
        if (err) throw err;
        console.log('Saved index.js!');
@@ -63,6 +63,29 @@ $(document).ready(function() {
      fs.writeFile(wd_new + 'style.css', "", function (err) {
        if (err) throw err;
        console.log('Saved style.css!');
+     });
+     var vhe = '\n\t\t<title>' + wd["name"] + '</title>\n\t\t<meta charset="utf-8">\n\t\t<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">\n\t\t<link rel="stylesheet" href="Plugins/bootstrap.css">\n\t\t<link rel="stylesheet" href="Plugins/fontawesome.css">\n\t\t<link rel="stylesheet" href="style.css">\n\t';
+     fs.writeFile(wd_new + 'he.wd', vhe, function (err) {
+       if (err) throw err;
+       console.log('Saved he.wd!');
+     });
+     fs.writeFile(wd_new + 'header.wd', "", function (err) {
+       if (err) throw err;
+       console.log('Saved header.wd!');
+     });
+     var vnav = '<nav class="navbar navbar-expand-md bg-dark navbar-dark">\n\t<a class="navbar-brand" href="#">' + wd["name"] + '</a>\n\t<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar"><span class="navbar-toggler-icon"></span></button>\n\t<div class="collapse navbar-collapse" id="collapsibleNavbar">\n\t\t<ul class="navbar-nav">\n\t\t\t<li id="n-home" class="nav-item"><a class="nav-link" href="#">Home</a></li>\n\t\t</ul>\n\t</div>\n</nav>';
+     fs.writeFile(wd_new + 'nav.wd', vnav, function (err) {
+       if (err) throw err;
+       console.log('Saved nav.wd!');
+     });
+     fs.writeFile(wd_new + 'foot.wd', '<hr><p>This is a <a href="https://www.webdesk.me" target="_blank">webdesk.me</a> app.</p>', function (err) {
+       if (err) throw err;
+       console.log('Saved foot.wd!');
+     });
+     var vfunc = 'if( $("he").length ){\n\t$("he").load("he.wd");\n}\nif( $("header").length ){\n\t$("header").load("header.wd");\n}\nif( $("nav").length ){\n\t$("nav").load("nav.wd");\n}\nif( $("foot").length ){\n\t$("foot").load("foot.wd");\n}\n$(document).ready(function() {\n\t\n});';
+     fs.writeFile(wd_new + 'func.js', vfunc, function (err) {
+       if (err) throw err;
+       console.log('Saved nav.wd!');
      });
      var wd_plugins = wd_new + "Plugins/";
      if (!fs.existsSync(wd_plugins)) {
