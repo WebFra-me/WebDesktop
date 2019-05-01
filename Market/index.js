@@ -3,6 +3,7 @@ $(document).ready(function() {
   var fs = require('fs');
   const fse = require('fs-extra');
   const wd_homedir = require('os').homedir();
+  var Dat = require('dat-node');
   var wd_home = wd_homedir + '/Documents/Webdesktop/';
   var wd_dir = wd_home + 'WebDesktop_App/';
   var wd_core = wd_home + 'WebDesktop_core/';

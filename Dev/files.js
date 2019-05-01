@@ -141,7 +141,14 @@ if(zip == 1){
        if (err) return console.error(err)
        console.log('success!')
      });
-     fse.copy(__dirname + '/alone/package.json', wd_alone + 'linux/resources/app/package.json', err => {
+     /*fse.copy(__dirname + '/alone/package.json', wd_alone + 'linux/resources/app/package.json', err => {
+       if (err) return console.error(err)
+       console.log('success!')
+     });*/
+     var prjs = fs.readFileSync(__dirname + '/alone/package.json');
+     prjs = String(prjs);
+     var res = prjs.replace(/webdesktop/g, obj.name);
+     fs.writeFile(wd_alone + 'linux/resources/app/package.js', res, err => {
        if (err) return console.error(err)
        console.log('success!')
      });
