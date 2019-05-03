@@ -25,6 +25,21 @@ $(document).ready(function() {
   if (!fs.existsSync(wd_www)) {
     fs.mkdirSync(wd_www);
   }
+  if (!fs.existsSync(wd_www + 'pages/')) {
+    fs.mkdirSync(wd_www + 'pages/');
+  }
+  if (!fs.existsSync(wd_www + 'themes/')) {
+    fs.mkdirSync(wd_www + 'themes/');
+  }
+  if (!fs.existsSync(wd_www + 'files/')) {
+    fs.mkdirSync(wd_www + 'files/');
+  }
+  if (!fs.existsSync(wd_www + 'logs/')) {
+    fs.mkdirSync(wd_www + 'logs/');
+  }
+  if (!fs.existsSync(wd_www + 'apps/')) {
+    fs.mkdirSync(wd_www + 'apps/');
+  }
   var wd_core = wd_home + 'WebDesktop_core/';
   if (!fs.existsSync(wd_core)) {
     fs.mkdirSync(wd_core);
@@ -123,18 +138,18 @@ $("#wdoc").click(function(){
   shell.openItem(wd_home);
 });
 $("#bwww").click(function(){
-  shell.openItem(wd_www);
+  shell.openItem(wd_www + 'files/');
 });
 var con = '<!DOCTYPE html><html><title>Site Map</title><meta charset="utf-8"><link href="favicon.ico" rel="icon" type="image/x-icon" /><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><body><h3>Site Map:</h3><ul>';
-files = fs.readdirSync(wd_www);
+files = fs.readdirSync(wd_www + 'files/');
 for (i = 0; i < files.length; i++) {
-    if (fs.existsSync(wd_www + files[i])) {
-      file = fs.readFileSync(wd_www + files[i]);
+    if (fs.existsSync(wd_www + 'files/' + files[i])) {
+      file = fs.readFileSync(wd_www + 'files/' + files[i]);
       con += '<li><a href="' + encodeURIComponent(files[i]) + '">' + files[i] +'</a></li>';
     }
 }
 con += '</ul></body></html>';
-fs.writeFile(wd_www + 'map.html', con, function (err) {
+fs.writeFile(wd_www + 'files/index.html', con, function (err) {
   if (err) throw err;
   console.log('Saved!');
 });
@@ -153,13 +168,16 @@ return;
 var myIP = "";
 if (alias >= 1) {
 // this single interface has multiple ipv4 addresses
-myIP += '<u><i><a href="http://' + iface.address + ':8080" target="_blank">http://' + iface.address + ':8080</a></i></u>';
+myIP += '<u><i><a href="#">http://' + iface.address + ':8080</a></i></u>';
 } else {
 // this interface has only one ipv4 adress
-myIP += '<u><i><a href="http://' + iface.address + ':8080" target="_blank">http://' + iface.address + ':8080</a></i></u>';
+myIP += '<u><i><a href="#">http://' + iface.address + ':8080</a></i></u>';
 }
 ++alias;
 document.getElementById("myip").innerHTML = myIP;
+$("#myip").click(function(){
+  shell.openItem('http://' + iface.address + ':8080');
+});
 });
 //document.getElementById("myip").innerHTML = myIP;
 });
@@ -177,78 +195,50 @@ else{
   var FAVICON = __dirname + '/favicon.ico';
 }
 var d = new Date();
-var server = http.createServer(function (req, res) {
-  var pathname = decodeURIComponent(url.parse(req.url).pathname);
-  var ext = pathname.split(".");
-  var ftype = "html";
-  var getClientAddress = req.connection.remoteAddress;
-  if(typeof ext[1] !== 'undefined' && ext[1] != 'html'){
-    if(ext[1] == 'css'){
-      var ftype = "css";
-    }
-    else if (ext[1] == 'js') {
-      var ftype = "js";
-    }
-    else {
-      ftype ="other";
-    }
-}
-    switch (pathname) {
-      case '/':
-      if(fs.existsSync(wd_www + 'index.html')){
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        var myReadStream = fs.createReadStream(wd_www + 'index.html', 'utf8');
-        myReadStream.pipe(res);
-        console.log(getClientAddress + " - index.html" + ":" + d);
-      }
-      else{
-        res.writeHead(200, {'Content-Type': 'text/html'});
-        var myReadStream = fs.createReadStream(wd_www + 'map.html', 'utf8');
-        myReadStream.pipe(res);
-        console.log(getClientAddress + " - map.html" + ":" + d);
-      }
-        break;
-      default:
-      if (pathname === '/favicon.ico') {
-        res.setHeader('Content-Type', 'image/x-icon');
-        fs.createReadStream(FAVICON).pipe(res);
-        return;
-      }
-      else if(fs.existsSync(wd_www + pathname)){
-        if(ftype == "html"){
-          res.writeHead(200, {'Content-Type': 'text/html'});
-          var myReadStream = fs.createReadStream(wd_www + pathname, 'utf8');
-          myReadStream.pipe(res);
-          console.log(getClientAddress + " - " + pathname + ":" + d);
-        }
-        else if (ftype == "css") {
-          res.writeHead(200, {'Content-Type': 'text/css'});
-          var myReadStream = fs.createReadStream(wd_www + pathname, 'utf8');
-          myReadStream.pipe(res);
-        }
-        else if (ftype == "js") {
-          res.writeHead(200, {'Content-Type': 'text/javascript'});
-          var myReadStream = fs.createReadStream(wd_www + pathname, 'utf8');
-          myReadStream.pipe(res);
-        }
-        else{
-          //res.download(wd_www + pathname);
-          fs.readFile(wd_www + pathname, function(err, data) {
-    res.writeHead(200, {'Content-Type': 'application/octet-stream'}, {'Content-Disposition': 'attachment'});
-    res.write(data);
-    res.end();
+const express = require('express');
+var bodyParser = require("body-parser");
+var favicon = require("serve-favicon");
+var morgan = require("morgan");
+//var rfs = require('rotating-file-stream');
+const app = express();
+const port = 8080;
+/*var accessLogStream = rfs('access.log', {
+  interval: '1d', // rotate daily
+  path: wd_home + 'logs'
+})*/
+var accessLogStream = fs.createWriteStream(wd_www + 'logs/access.log', { flags: 'a' });
+app.use(morgan('short', { stream: accessLogStream }));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(favicon(FAVICON));
+
+//app.get('/', (req, res) => res.send('index.html'))
+app.use('/', express.static(__dirname + '/public'))
+app.use('/themes/', express.static(wd_www + 'themes/'))
+app.use('/pages/', express.static(wd_www + 'pages/'))
+app.use('/apps/', express.static(wd_www + 'apps/'))
+app.use('/files/', express.static(wd_www + 'files/'))
+app.post('/',function(req,res){
+  var post=req.body;
+  //var password=req.body.password;
+  //console.log("User name = "+user_name+", password is "+password);
+  res.end("yes");
+});
+
+// Handle 404
+  app.use(function(req, res) {
+     res.status(404).send('404: Page not Found');
+     //res.send('404: Page not Found', 404);
   });
-      }
-      //var myReadStream = fs.createReadStream(wd_www + pathname, 'utf8');
-    }
-    else{
-      res.writeHead(200, {'Content-Type': 'text/html'});
-      var myReadStream = fs.createReadStream(wd_www + 'map.html', 'utf8');
-      myReadStream.pipe(res);
-    }
-    }
-    //myReadStream.pipe(res);
-}).listen(8080);
+
+  // Handle 500
+  app.use(function(error, req, res, next) {
+     res.status(500).send('500: Internal Server Error');
+     //res.send('500: Internal Server Error', 500);
+  });
+
+app.listen(port, () => console.log(`Listening on port ${port}!`))
 //$('[data-toggle="tooltip"]').tooltip();
 console.log("WebServer trafic will show up here.");
 });
