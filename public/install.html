@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>NodeFrame</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="Plugins/bootstrap.css">
+  <link rel="stylesheet" href="Plugins/fontawesome.css">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+   <!-- Brand -->
+   <a class="navbar-brand" href="index.html">NodeFrame</a>
+
+   <!-- Toggler/collapsibe Button -->
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+     <span class="navbar-toggler-icon"></span>
+   </button>
+
+   <!-- Navbar links -->
+   <div class="collapse navbar-collapse" id="collapsibleNavbar">
+     <ul class="navbar-nav">
+       <li class="nav-item active">
+         <a class="nav-link" href="login.html">Login</a>
+       </li>
+     </ul>
+   </div>
+  </nav>
+
+<div class="jumbotron text-center">
+  <h1>My NodeFrame</h1>
+  <p>Your webdesktop app on the web.</p>
+</div>
+<div class="container">
+  <form>
+    <p>Create your admin account.</p>
+    <div class="form-group">
+      <label for="email">Email address:</label>
+      <input type="text" class="form-control" id="email" placeholder="you@domain.com" required>
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" id="pwd" placeholder="Case Sensitive" required>
+    </div>
+    <button type="button" class="btn btn-primary" id="login">Submit</button>
+  </form>
+  <div id="error"></div>
+</div>
+<script src="Plugins/jquery.js"></script>
+<script src="Plugins/bootstrap.js"></script>
+<script src="Plugins/fontawesome.js"></script>
+<script src="login.js"></script>
+</body>
+</html>
