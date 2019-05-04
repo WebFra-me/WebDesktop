@@ -140,7 +140,7 @@ $("#wdoc").click(function(){
 $("#bwww").click(function(){
   shell.openItem(wd_www + 'files/');
 });
-var con = '<!DOCTYPE html><html><title>Site Map</title><meta charset="utf-8"><link href="favicon.ico" rel="icon" type="image/x-icon" /><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><body><h3>Site Map:</h3><ul>';
+var con = '<!DOCTYPE html><html><title>Site Map</title><meta charset="utf-8"><link href="favicon.ico" rel="icon" type="image/x-icon" /><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><body><h3>Site Map:</h3><p><a href="index.html">Back to home page.</a></p><ul>';
 files = fs.readdirSync(wd_www + 'files/');
 for (i = 0; i < files.length; i++) {
     if (fs.existsSync(wd_www + 'files/' + files[i])) {
@@ -214,11 +214,14 @@ app.use(bodyParser.json());
 app.use(favicon(FAVICON));
 
 //app.get('/', (req, res) => res.send('index.html'))
-app.use('/', express.static(__dirname + '/public'))
-app.use('/themes/', express.static(wd_www + 'themes/'))
-app.use('/pages/', express.static(wd_www + 'pages/'))
-app.use('/apps/', express.static(wd_www + 'apps/'))
-app.use('/files/', express.static(wd_www + 'files/'))
+app.use('/', express.static(wd_www + 'themes/default/'));
+app.use('/plugins/', express.static(__dirname + '/public/plugins/'));
+app.get('/render.js',function(req,res) {
+  res.sendFile(__dirname + '/public/render.js');
+});
+app.use('/pages/', express.static(wd_www + 'pages/'));
+app.use('/apps/', express.static(wd_www + 'apps/'));
+app.use('/files/', express.static(wd_www + 'files/'));
 app.post('/',function(req,res){
   var post=req.body;
   //var password=req.body.password;
@@ -228,7 +231,7 @@ app.post('/',function(req,res){
 
 // Handle 404
   app.use(function(req, res) {
-     res.status(404).send('404: Page not Found');
+     res.status(404).send('<h1>404: Page not Found</h1><h3><a href="index.html">Back to home page.</a></h3>');
      //res.send('404: Page not Found', 404);
   });
 
